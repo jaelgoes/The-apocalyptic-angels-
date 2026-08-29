@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Best Hamburgers | Menú & Pedidos en Línea</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              pink: '#ff1493',
+              hotpink: '#ff007f',
+              darkpink: '#d8006f',
+              purple: '#8b5cf6',
+              dark: '#0f0f14',
+              card: '#181824',
+              accent: '#ff2e93'
+            }
+          },
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0d0e15;
+      color: #f3f4f6;
+      font-family: 'Poppins', sans-serif;
+    }
+    .glow-pink {
+      box-shadow: 0 0 20px rgba(255, 20, 147, 0.4);
+    }
+    .glow-pink-sm {
+      box-shadow: 0 0 10px rgba(255, 20, 147, 0.25);
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #ff69b4, #ff1493, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0d0e15;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ff1493;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-pink selection:text-white pb-24 md:pb-12">
+
+  <!-- TOP HEADER -->
+  <header class="sticky top-0 z-40 bg-brand-dark/95 backdrop-blur-md border-b border-brand-pink/20 shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      
+      <!-- LOGO & BRAND -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('info')">
+        <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-brand-pink to-purple-600 p-0.5 shadow-md flex items-center justify-center">
+          <div class="w-full h-full bg-black rounded-full flex items-center justify-center text-brand-pink font-black text-xs tracking-tighter text-center leading-none p-1 border border-brand-pink/40">
+            THE BEST
+          </div>
+        </div>
+        <div>
+          <h1 class="font-extrabold text-lg md:text-xl tracking-tight leading-tight text-white flex items-center gap-1.5">
+            THE BEST <span class="text-brand-pink">HAMBURGERS</span>
+          </h1>
+          <p class="text-xs text-pink-300/80 font-medium">✨ 2 Años de Aniversario</p>
+        </div>
+      </div>
+
+      <!-- NAVIGATION TABS -->
+      <nav class="flex items-center gap-2 bg-black/60 p-1 rounded-full border border-pink-500/30">
+        <button id="tab-btn-info" onclick="switchTab('info')" class="px-4 py-2 rounded-full text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 bg-brand-pink text-white shadow-md">
+          <i data-lucide="info" class="w-4 h-4"></i>
+          <span>Información</span>
+        </button>
+        <button id="tab-btn-menu" onclick="switchTab('menu')" class="px-4 py-2 rounded-full text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 text-gray-300 hover:text-white">
+          <i data-lucide="utensils" class="w-4 h-4"></i>
+          <span>Arma tu Pedido</span>
+          <span id="nav-cart-badge" class="hidden ml-1 bg-brand-pink text-white text-[10px] font-black px-1.5 py-0.5 rounded-full">0</span>
+        </button>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 w-full flex-1">
+
+    <!-- ==================== SECTION 1: INFORMACIÓN DEL RESTAURANTE ==================== -->
+    <section id="section-info" class="space-y-8 animate-fadeIn">
+      
+      <!-- HERO BANNER -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-900/40 via-brand-dark to-pink-950/50 border border-brand-pink/30 p-6 md:p-10 shadow-2xl">
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-pink/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 max-w-2xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-pink/20 border border-brand-pink/40 text-pink-300 text-xs font-bold uppercase tracking-wider">
+            <span>🍔 El Sabor que te conquista</span>
+          </div>
+          <h2 class="text-3xl md:text-5xl font-black text-white leading-tight">
+            Hamburguesas hechas al momento con <span class="text-gradient">ingredientes frescos</span>
+          </h2>
+          <p class="text-gray-300 text-sm md:text-base">
+            Disfruta de la mejor calidad en hamburguesas de res y pollo, burritos gigantes, boneless crujientes, papas locas, hot-dogs y sodas italianas o boba teas.
+          </p>
+
+          <!-- BOTÓN PRINCIPAL UBICACIÓN -->
+          <div class="pt-2 flex flex-wrap gap-4 items-center">
+            <a href="https://maps.app.goo.gl/Q1ZEYsVTjgFxFeER7?g_st=ac" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center gap-2.5 px-6 py-3.5 bg-gradient-to-r from-brand-pink to-brand-hotpink hover:from-brand-darkpink hover:to-pink-600 text-white font-extrabold rounded-2xl shadow-lg glow-pink transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-sm md:text-base">
+              <i data-lucide="map-pin" class="w-5 h-5 text-white animate-bounce"></i>
+              <span>¡Nos ubicamos aquí!</span>
+              <i data-lucide="external-link" class="w-4 h-4 opacity-80"></i>
+            </a>
+
+            <button onclick="switchTab('menu')" class="px-6 py-3.5 bg-gray-800/80 hover:bg-gray-700 text-white font-bold rounded-2xl border border-gray-600 transition-all text-sm md:text-base flex items-center gap-2">
+              <i data-lucide="shopping-bag" class="w-5 h-5 text-brand-pink"></i>
+              <span>Ver Menú y Pedir</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TARJETAS DE INFORMACIÓN RÁPIDA -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- HORARIO -->
+        <div class="bg-brand-card/90 border border-pink-500/20 rounded-2xl p-5 flex items-start gap-4 hover:border-brand-pink/40 transition-all">
+          <div class="p-3 bg-brand-pink/10 rounded-xl text-brand-pink border border-brand-pink/20">
+            <i data-lucide="clock" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white text-base">Horario de Atención</h3>
+            <p class="text-sm font-semibold text-pink-400 mt-1">Jueves a Lunes</p>
+            <p class="text-xs text-gray-400">6:30 PM a 11:00 PM</p>
+          </div>
+        </div>
+
+        <!-- DIRECCIÓN -->
+        <div class="bg-brand-card/90 border border-pink-500/20 rounded-2xl p-5 flex items-start gap-4 hover:border-brand-pink/40 transition-all">
+          <div class="p-3 bg-purple-500/10 rounded-xl text-purple-400 border border-purple-500/20">
+            <i data-lucide="map-pin" class="w-6 h-6"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="font-bold text-white text-base">Dirección</h3>
+            <p class="text-xs text-gray-300 mt-1">Calle Nogal S/N, Coyotillos</p>
+            <p class="text-xs text-gray-400">El Marqués, Querétaro</p>
+            <a href="https://maps.app.goo.gl/Q1ZEYsVTjgFxFeER7?g_st=ac" target="_blank" class="inline-block text-xs font-bold text-brand-pink hover:underline mt-1">Ver en Google Maps &rarr;</a>
+          </div>
+        </div>
+
+        <!-- PEDIDOS WHATSAPP -->
+        <div class="bg-brand-card/90 border border-pink-500/20 rounded-2xl p-5 flex items-start gap-4 hover:border-brand-pink/40 transition-all">
+          <div class="p-3 bg-green-500/10 rounded-xl text-green-400 border border-green-500/20">
+            <i data-lucide="phone" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white text-base">Pedidos & WhatsApp</h3>
+            <p class="text-sm font-semibold text-green-400 mt-1">442 369 2088</p>
+            <p class="text-xs text-gray-400">¡Envíos rápidos a domicilio!</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DESTACADO PROMO Y INFORMACIÓN DEL MENÚ -->
+      <div class="bg-gradient-to-r from-pink-950/40 via-brand-dark to-purple-950/40 rounded-3xl p-6 border border-brand-pink/30">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-2 text-center md:text-left">
+            <span class="bg-yellow-500/20 text-yellow-300 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider border border-yellow-500/30">
+              🍟 ¡Súper Promoción!
+            </span>
+            <h3 class="text-2xl font-extrabold text-white">Toda HAMBURGUESA incluye papas GRATIS</h3>
+            <p class="text-gray-300 text-sm max-w-xl">
+              Cualquiera que elijas (Clásica, Hawaiana, Doble, La del Chef, La Hasi, La de Jael, Magno, Princess o Reina Crujiente) viene acompañada con su orden de papas fritas sin costo extra.
+            </p>
+          </div>
+          <button onclick="switchTab('menu')" class="px-6 py-3 bg-brand-pink hover:bg-brand-hotpink text-white font-bold rounded-xl shadow-lg glow-pink transition-all whitespace-nowrap">
+            ¡Hacer mi pedido ahora!
+          </button>
+        </div>
+      </div>
+
+      <!-- GALERÍA DE PLATILLOS DESTACADOS -->
+      <div>
+        <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <i data-lucide="sparkles" class="w-5 h-5 text-brand-pink"></i>
+          <span>Nuestras Especialidades de la Casa</span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <!-- ITEM 1: LA PRINCESS -->
+          <div class="bg-brand-card border border-pink-500/20 rounded-2xl overflow-hidden hover:border-brand-pink/50 transition-all group">
+            <div class="h-44 bg-pink-950/30 flex items-center justify-center p-4 relative">
+              <span class="absolute top-3 left-3 bg-brand-pink text-white text-[10px] font-black px-2 py-1 rounded-md">⭐ NUEVA</span>
+              <div class="text-center">
+                <div class="text-5xl mb-2">👑🍔</div>
+                <h4 class="font-extrabold text-lg text-white">La Princess</h4>
+                <p class="text-brand-pink font-extrabold text-xl">$110</p>
+              </div>
+            </div>
+            <div class="p-4 space-y-2">
+              <p class="text-xs text-gray-300">Carne de res, mucho tocino, aguacate, queso derretido, catsup y mayonesa.</p>
+              <button onclick="quickAdd('h1')" class="w-full py-2 bg-pink-950/50 hover:bg-brand-pink text-pink-300 hover:text-white border border-brand-pink/40 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+                <i data-lucide="plus" class="w-4 h-4"></i> Agregar al Pedido
+              </button>
+            </div>
+          </div>
+
+          <!-- ITEM 2: REINA CRUJIENTE -->
+          <div class="bg-brand-card border border-pink-500/20 rounded-2xl overflow-hidden hover:border-brand-pink/50 transition-all group">
+            <div class="h-44 bg-pink-950/30 flex items-center justify-center p-4 relative">
+              <span class="absolute top-3 left-3 bg-purple-600 text-white text-[10px] font-black px-2 py-1 rounded-md">🔥 NUEVA</span>
+              <div class="text-center">
+                <div class="text-5xl mb-2">🍗🧀</div>
+                <h4 class="font-extrabold text-lg text-white">Reina Crujiente</h4>
+                <p class="text-brand-pink font-extrabold text-xl">$115</p>
+              </div>
+            </div>
+            <div class="p-4 space-y-2">
+              <p class="text-xs text-gray-300">Pechuga crispy en salsa especial, cebolla caramelizada, tocino y gratinada.</p>
+              <button onclick="quickAdd('h2')" class="w-full py-2 bg-pink-950/50 hover:bg-brand-pink text-pink-300 hover:text-white border border-brand-pink/40 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+                <i data-lucide="plus" class="w-4 h-4"></i> Agregar al Pedido
+              </button>
+            </div>
+          </div>
+
+          <!-- ITEM 3: BONELESS 200g -->
+          <div class="bg-brand-card border border-pink-500/20 rounded-2xl overflow-hidden hover:border-brand-pink/50 transition-all group">
+            <div class="h-44 bg-pink-950/30 flex items-center justify-center p-4 relative">
+              <div class="text-center">
+                <div class="text-5xl mb-2">🍢🍟</div>
+                <h4 class="font-extrabold text-lg text-white">Boneless (200g)</h4>
+                <p class="text-brand-pink font-extrabold text-xl">$110</p>
+              </div>
+            </div>
+            <div class="p-4 space-y-2">
+              <p class="text-xs text-gray-300">Con pepino, papas a la francesa y zanahoria. Salsa BBQ, Búfalo, Mango Habanero o Sriracha.</p>
+              <button onclick="quickAdd('b1')" class="w-full py-2 bg-pink-950/50 hover:bg-brand-pink text-pink-300 hover:text-white border border-brand-pink/40 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+                <i data-lucide="plus" class="w-4 h-4"></i> Agregar al Pedido
+              </button>
+            </div>
+          </div>
+
+          <!-- ITEM 4: PAPAS LOCAS LAS DOMINIK -->
+          <div class="bg-brand-card border border-pink-500/20 rounded-2xl overflow-hidden hover:border-brand-pink/50 transition-all group">
+            <div class="h-44 bg-pink-950/30 flex items-center justify-center p-4 relative">
+              <div class="text-center">
+                <div class="text-5xl mb-2">🍟🥩</div>
+                <h4 class="font-extrabold text-lg text-white">Papas Locas</h4>
+                <p class="text-brand-pink font-extrabold text-xl">$140</p>
+              </div>
+            </div>
+            <div class="p-4 space-y-2">
+              <p class="text-xs text-gray-300">Papas gratinadas con queso Oaxaca, arrachera, cebolla asada y chimichurri de chipotle.</p>
+              <button onclick="quickAdd('pl1')" class="w-full py-2 bg-pink-950/50 hover:bg-brand-pink text-pink-300 hover:text-white border border-brand-pink/40 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+                <i data-lucide="plus" class="w-4 h-4"></i> Agregar al Pedido
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MÉTODOS DE PAGO Y NOTAS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <div class="bg-brand-card/70 border border-gray-800 rounded-2xl p-4 flex items-center gap-4">
+          <div class="p-3 bg-blue-500/10 rounded-xl text-blue-400">
+            <i data-lucide="credit-card" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-white text-sm">Métodos de Pago Aceptados</h4>
+            <p class="text-xs text-gray-400 mt-0.5">Efectivo, Mercado Pago (Transferencia), Tarjetas VISA, Débito y Crédito.</p>
+          </div>
+        </div>
+
+        <div class="bg-brand-card/70 border border-gray-800 rounded-2xl p-4 flex items-center gap-4">
+          <div class="p-3 bg-amber-500/10 rounded-xl text-amber-400">
+            <i data-lucide="award" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-white text-sm">Calidad Garantizada</h4>
+            <p class="text-xs text-gray-400 mt-0.5">"No se trata de la perfección, se trata de la satisfacción del cliente."</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== SECTION 2: ARMA TU PEDIDO ==================== -->
+    <section id="section-menu" class="hidden space-y-6 animate-fadeIn">
+      
+      <!-- MENU HEADER & CATEGORY FILTERS -->
+      <div class="space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-black text-white flex items-center gap-2">
+              <span>Arma tu Pedido</span>
+              <span class="text-brand-pink">🛒</span>
+            </h2>
+            <p class="text-gray-400 text-xs md:text-sm">Selecciona tus platillos favoritos, personalízalos y envíalos directo a nuestro WhatsApp.</p>
+          </div>
+
+          <!-- BOTÓN VER CARRITO MÓVIL/DESKTOP -->
+          <button onclick="toggleCartDrawer()" class="px-5 py-2.5 bg-gradient-to-r from-brand-pink to-brand-hotpink text-white font-extrabold rounded-xl shadow-lg flex items-center gap-2 hover:opacity-90 transition-all text-sm">
+            <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+            <span>Ver mi Carrito</span>
+            <span id="cart-badge-counter" class="bg-white text-brand-pink text-xs font-black px-2 py-0.5 rounded-full ml-1">0</span>
+          </button>
+        </div>
+
+        <!-- CATEGORÍAS (PILLS SCROLLABLE) -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <button onclick="filterCategory('all')" class="cat-pill active px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-brand-pink text-white shadow-md">
+            Todas
+          </button>
+          <button onclick="filterCategory('hamburguesas')" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-brand-card text-gray-300 hover:text-white border border-gray-800">
+            🍔 Hamburguesas
+          </button>
+          <button onclick="filterCategory('burritos')" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-brand-card text-gray-300 hover:text-white border border-gray-800">
+            🌯 Burritos
+          </button>
+          <button onclick="filterCategory('boneless')" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-brand-card text-gray-300 hover:text-white border border-gray-800">
+            🍗 Boneless
+          </button>
+          <button onclick="filterCategory('hotdogs')" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-brand-card text-gray-300 hover:text-white border border-gray-800">
+            🌭 Hot-Dogs
+          </button>
+          <button onclick="filterCategory('papas')" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-brand-card text-gray-300 hover:text-white border border-gray-800">
+            🍟 Papas Locas
+          </button>
+          <button onclick="filterCategory('bebidas')" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-brand-card text-gray-300 hover:text-white border border-gray-800">
+            🧋 Bebidas & Bobas
+          </button>
+        </div>
+      </div>
+
+      <!-- BANNER NOTA PROMO -->
+      <div class="bg-brand-pink/10 border border-brand-pink/30 rounded-2xl p-3 flex items-center gap-3 text-pink-300 text-xs">
+        <i data-lucide="gift" class="w-5 h-5 flex-shrink-0 text-brand-pink"></i>
+        <span>Recuerda: <strong>Todas las Hamburguesas incluyen una orden de papas fritas GRATIS</strong>.</span>
+      </div>
+
+      <!-- GRID DE PRODUCTOS DEL MENÚ -->
+      <div id="menu-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Generado dinámicamente con JS -->
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== FIXED BOTTOM BAR (MÓVIL) ==================== -->
+  <div id="sticky-cart-bar" class="fixed bottom-0 left-0 right-0 z-30 bg-brand-dark/95 backdrop-blur-md border-t border-brand-pink/30 p-3 shadow-2xl transition-transform duration-300 transform translate-y-full">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+      <div>
+        <p class="text-[10px] text-gray-400 font-medium">TOTAL MI PEDIDO</p>
+        <p id="sticky-cart-total" class="text-xl font-extrabold text-brand-pink">$0.00</p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleCartDrawer()" class="px-4 py-2.5 bg-brand-card hover:bg-gray-800 text-white font-bold rounded-xl border border-gray-700 text-xs flex items-center gap-1.5">
+          <i data-lucide="list" class="w-4 h-4 text-brand-pink"></i>
+          <span>Detalles (<span id="sticky-cart-count">0</span>)</span>
+        </button>
+        <button onclick="toggleCartDrawer()" class="px-5 py-2.5 bg-gradient-to-r from-brand-pink to-brand-hotpink text-white font-extrabold rounded-xl shadow-lg glow-pink text-xs flex items-center gap-1.5">
+          <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+          <span>Finalizar Pedido</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL / DRAWER DEL CARRITO DE COMPRAS ==================== -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex justify-end transition-opacity">
+    <div class="w-full max-w-md bg-brand-dark h-full flex flex-col border-l border-brand-pink/30 shadow-2xl animate-slideLeft">
+      
+      <!-- CART DRAWER HEADER -->
+      <div class="p-4 border-b border-gray-800 flex items-center justify-between bg-black/40">
+        <div class="flex items-center gap-2">
+          <div class="p-2 bg-brand-pink/20 rounded-lg text-brand-pink">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-white text-base">Tu Pedido</h3>
+            <p class="text-[11px] text-gray-400">The Best Hamburgers</p>
+          </div>
+        </div>
+        <button onclick="toggleCartDrawer()" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-gray-800">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- CART ITEMS LIST -->
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-3">
+        <!-- Renderizado con JS -->
+      </div>
+
+      <!-- CART FOOTER & FORM -->
+      <div class="p-4 border-t border-gray-800 bg-black/60 space-y-4">
+        
+        <!-- DATOS DEL CLIENTE -->
+        <div class="space-y-2">
+          <h4 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1">
+            <i data-lucide="user" class="w-3.5 h-3.5 text-brand-pink"></i>
+            <span>Datos para tu Entrega / Entrega</span>
+          </h4>
+          <input type="text" id="cust-name" placeholder="Tu Nombre *" class="w-full bg-brand-card border border-gray-700 focus:border-brand-pink rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 outline-none">
+          <input type="text" id="cust-address" placeholder="Dirección / Pasar a recoger en sucursal *" class="w-full bg-brand-card border border-gray-700 focus:border-brand-pink rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 outline-none">
+          <textarea id="cust-notes" rows="2" placeholder="Notas adicionales (Ej. Sin cebolla, extra mayonesa...)" class="w-full bg-brand-card border border-gray-700 focus:border-brand-pink rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 outline-none resize-none"></textarea>
+        </div>
+
+        <!-- TOTAL & WHATSAPP BUTTON -->
+        <div class="pt-2 border-t border-gray-800">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-sm font-bold text-gray-300">TOTAL A PAGAR:</span>
+            <span id="cart-drawer-total" class="text-2xl font-black text-brand-pink">$0.00</span>
+          </div>
+
+          <button onclick="sendOrderToWhatsApp()" class="w-full py-3.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-black rounded-xl shadow-lg glow-pink flex items-center justify-center gap-2 text-sm transition-all transform hover:scale-[1.02]">
+            <i data-lucide="message-square" class="w-5 h-5 fill-current"></i>
+            <span>ENVIAR PEDIDO POR WHATSAPP</span>
+          </button>
+          <p class="text-[10px] text-center text-gray-400 mt-2">
+            📲 Se abrirá WhatsApp con el resumen de tu pedido redactado automáticamente.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-black border-t border-gray-900 py-6 mt-12 text-center text-xs text-gray-500">
+    <div class="max-w-6xl mx-auto px-4 space-y-2">
+      <p class="font-bold text-gray-400">THE BEST HAMBURGERS © 2026 - ¡El sabor que te conquista!</p>
+      <p>Calle Nogal S/N, Coyotillos, El Marqués, Qro. | Tel: 442 369 2088</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // DATASET DEL MENÚ COMPLETO
+    const MENU_ITEMS = [
+      // HAMBURGUESAS
+      {
+        id: 'h1',
+        category: 'hamburguesas',
+        title: 'La Princess 👑',
+        price: 110,
+        badge: 'NUEVA',
+        desc: 'Carne de res, mucho tocino, aguacate, queso derretido, catsup y mayonesa. (Incluye papas GRATIS)',
+        options: []
+      },
+      {
+        id: 'h2',
+        category: 'hamburguesas',
+        title: 'Reina Crujiente 👑',
+        price: 115,
+        badge: 'NUEVA',
+        desc: 'Pechuga crispy bañada en salsa a elegir, cebolla caramelizada, tocino y gratinada con queso especial. (Incluye papas GRATIS)',
+        options: {
+          label: 'Elige tu salsa:',
+          items: ['BBQ', 'Mango Habanero', 'Sriracha', 'Búfalo']
+        }
+      },
+      {
+        id: 'h3',
+        category: 'hamburguesas',
+        title: 'Clásica',
+        price: 65,
+        desc: 'Carne de res, jamón, queso panela, lechuga, jitomate y aguacate. (Incluye papas GRATIS)',
+        options: []
+      },
+      {
+        id: 'h4',
+        category: 'hamburguesas',
+        title: 'Clásica Hawaiana',
+        price: 95,
+        desc: 'Carne de res, queso panela, tocino, piña, jamón, jitomate, aguacate y lechuga. (Incluye papas GRATIS)',
+        options: []
+      },
+      {
+        id: 'h5',
+        category: 'hamburguesas',
+        title: 'Doble Carne',
+        price: 100,
+        desc: 'Doble carne de res, queso panela, jamón, lechuga, jitomate y aguacate. (Incluye papas GRATIS)',
+        options: []
+      },
+      {
+        id: 'h6',
+        category: 'hamburguesas',
+        title: 'La del Chef',
+        price: 100,
+        desc: 'Carne de res, champiñón, tocino, queso Oaxaca, cebolla asada, jitomate, aguacate y lechuga. (Incluye papas GRATIS)',
+        options: []
+      },
+      {
+        id: 'h7',
+        category: 'hamburguesas',
+        title: 'La Hasi',
+        price: 115,
+        desc: 'Carne de res, piña, chorizo, queso Oaxaca, lechuga, jitomate y aguacate. (Incluye papas GRATIS)',
+        options: []
+      },
+      {
+        id: 'h8',
+        category: 'hamburguesas',
+        title: 'La de Jael',
+        price: 130,
+        desc: '160gr arrachera, queso Oaxaca, cebolla asada, aguacate y chimichurri. (Incluye papas GRATIS)',
+        options: []
+      },
+      {
+        id: 'h9',
+        category: 'hamburguesas',
+        title: 'Magno',
+        price: 130,
+        desc: 'Arrachera, champiñón, tocino, queso Oaxaca, cebolla asada, lechuga, jitomate y aguacate. (Incluye papas GRATIS)',
+        options: []
+      },
+
+      // BURRITOS
+      {
+        id: 'bu1',
+        category: 'burritos',
+        title: 'Burrito de Arrachera (Grande 30-40 cm)',
+        price: 95,
+        desc: 'Gran burrito preparado con jugosa arrachera y complemento a la plancha.',
+        options: []
+      },
+      {
+        id: 'bu2',
+        category: 'burritos',
+        title: 'Burrito de Chorizo (Grande 30-40 cm)',
+        price: 95,
+        desc: 'Gran burrito con chorizo tradicional bien dorado.',
+        options: []
+      },
+      {
+        id: 'bu3',
+        category: 'burritos',
+        title: 'Burrito de Bistec (Grande 30-40 cm)',
+        price: 95,
+        desc: 'Gran burrito estilo casero con bistec seleccionado.',
+        options: []
+      },
+
+      // BONELESS
+      {
+        id: 'b1',
+        category: 'boneless',
+        title: 'Boneless (200 Gramos)',
+        price: 110,
+        desc: 'Crujientes trozos de pechuga acompañados de pepino, papas a la francesa y zanahoria.',
+        options: {
+          label: 'Elige tu salsa:',
+          items: ['BBQ', 'Mango Habanero', 'Búfalo', 'Salsa Sriracha']
+        }
+      },
+
+      // HOT DOGS
+      {
+        id: 'hd1',
+        category: 'hotdogs',
+        title: 'Hot-Dog Tradicional',
+        price: 50,
+        desc: 'Salchicha de pavo premium con fresco pico de gallo.',
+        options: []
+      },
+      {
+        id: 'hd2',
+        category: 'hotdogs',
+        title: 'Hot-Dog Momias',
+        price: 65,
+        desc: 'Salchicha envuelta en tocino crujiente, cebolla asada y pico de gallo.',
+        options: []
+      },
+      {
+        id: 'hd3',
+        category: 'hotdogs',
+        title: 'Hot-Dog Ula-Ula',
+        price: 80,
+        desc: 'Salchicha, chorizo, piña caramelizada, queso especial y cebolla asada.',
+        options: []
+      },
+      {
+        id: 'hd4',
+        category: 'hotdogs',
+        title: 'Hot-Dog Del Rancho',
+        price: 105,
+        desc: 'Salchicha, arrachera, cebolla asada, queso Oaxaca, aguacate y chimichurri.',
+        options: []
+      },
+      {
+        id: 'hd5',
+        category: 'hotdogs',
+        title: 'Salchipapa',
+        price: 70,
+        desc: 'Combinación perfecta de salchicha frita con papas a la francesa.',
+        options: []
+      },
+
+      // PAPAS LOCAS
+      {
+        id: 'pl1',
+        category: 'papas',
+        title: 'Papas Locas - Las Dominik',
+        price: 140,
+        desc: 'Papas a la francesa gratinadas con queso Oaxaca, arrachera, cebolla asada y chimichurri de chipotle.',
+        options: []
+      },
+      {
+        id: 'pl2',
+        category: 'papas',
+        title: 'Papas Locas - Las de Tade',
+        price: 140,
+        desc: 'Papas a la francesa gratinadas con queso Oaxaca, cebolla asada, piña, chorizo y chimichurri picoso de la casa.',
+        options: []
+      },
+
+      // BEBIDAS
+      {
+        id: 'beb1',
+        category: 'bebidas',
+        title: 'Bobas Cremosas',
+        price: 70,
+        desc: 'Deliciosa bebida cremosa fría con perlas boba.',
+        options: {
+          label: 'Sabor de Boba Cremosa:',
+          items: ['Té Chai Vainilla', 'Taro', 'Matcha', 'Cookies Cream', 'Chocolate Premium', 'Chocolate Blanco', 'Red Velvet', 'Algodón de Azúcar']
+        }
+      },
+      {
+        id: 'beb2',
+        category: 'bebidas',
+        title: 'Sodas Italianas',
+        price: 60,
+        desc: 'Bebida refrescante y frutal con gas.',
+        options: {
+          label: 'Sabor de Soda Italiana:',
+          items: ['Mora Azul', 'Fresa', 'Mango', 'Kiwi', 'Maracuyá', 'Manzana Verde', 'Sammia']
+        }
+      },
+      {
+        id: 'beb3',
+        category: 'bebidas',
+        title: 'Refresco (600 ml)',
+        price: 30,
+        desc: 'Refresco embotellado de 600ml bien frío.',
+        options: {
+          label: 'Selecciona Refresco:',
+          items: ['Coca-Cola Normal', 'Coca-Cola Sin Azúcar', 'Sprite', 'Fanta', 'Sidral Mundet']
+        }
+      },
+      {
+        id: 'beb4',
+        category: 'bebidas',
+        title: 'Agrega Perlas Explosivas',
+        price: 15,
+        desc: 'Agrega perlas explosivas con explosión de sabor a tu bebida favorita.',
+        options: []
+      }
+    ];
+
+    // ESTADO DEL CARRITO
+    let cart = [];
+    let currentCategory = 'all';
+
+    // INICIALIZACIÓN
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderMenu();
+      updateCartUI();
+    });
+
+    // CAMBIAR PESTAÑAS (INFORMACIÓN VS MENÚ)
+    function switchTab(tab) {
+      const sectionInfo = document.getElementById('section-info');
+      const sectionMenu = document.getElementById('section-menu');
+      const btnInfo = document.getElementById('tab-btn-info');
+      const btnMenu = document.getElementById('tab-btn-menu');
+
+      if (tab === 'info') {
+        sectionInfo.classList.remove('hidden');
+        sectionMenu.classList.add('hidden');
+        
+        btnInfo.className = "px-4 py-2 rounded-full text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 bg-brand-pink text-white shadow-md";
+        btnMenu.className = "px-4 py-2 rounded-full text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 text-gray-300 hover:text-white";
+      } else {
+        sectionInfo.classList.add('hidden');
+        sectionMenu.classList.remove('hidden');
+
+        btnMenu.className = "px-4 py-2 rounded-full text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 bg-brand-pink text-white shadow-md";
+        btnInfo.className = "px-4 py-2 rounded-full text-xs md:text-sm font-bold transition-all flex items-center gap-1.5 text-gray-300 hover:text-white";
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // FILTRAR CATEGORÍAS EN EL MENÚ
+    function filterCategory(cat) {
+      currentCategory = cat;
+      const pills = document.querySelectorAll('.cat-pill');
+      pills.forEach(pill => {
+        pill.className = "cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-brand-card text-gray-300 hover:text-white border border-gray-800";
+      });
+      event.target.className = "cat-pill active px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-brand-pink text-white shadow-md";
+      
+      renderMenu();
+    }
+
+    // RENDERIZAR PLATILLOS EN EL MENÚ
+    function renderMenu() {
+      const container = document.getElementById('menu-container');
+      const filtered = currentCategory === 'all' 
+        ? MENU_ITEMS 
+        : MENU_ITEMS.filter(item => item.category === currentCategory);
+
+      container.innerHTML = filtered.map(item => {
+        const hasOptions = item.options && item.options.items && item.options.items.length > 0;
+        
+        return `
+          <div class="bg-brand-card border border-gray-800 hover:border-pink-500/40 rounded-2xl p-5 flex flex-col justify-between transition-all group">
+            <div class="space-y-2">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="font-bold text-white text-base group-hover:text-brand-pink transition-colors">${item.title}</h3>
+                <span class="text-brand-pink font-black text-lg flex-shrink-0">$${item.price}</span>
+              </div>
+              
+              <p class="text-xs text-gray-400 leading-relaxed">${item.desc}</p>
+
+              ${hasOptions ? `
+                <div class="pt-2">
+                  <label class="block text-[11px] font-bold text-gray-300 mb-1">${item.options.label}</label>
+                  <select id="select-opt-${item.id}" class="w-full bg-black/60 border border-gray-700 focus:border-brand-pink rounded-xl px-2.5 py-1.5 text-xs text-white outline-none">
+                    ${item.options.items.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                  </select>
+                </div>
+              ` : ''}
+            </div>
+
+            <div class="pt-4 mt-3 border-t border-gray-800/60 flex items-center justify-between">
+              <span class="text-[11px] text-gray-500 font-medium">${item.category.toUpperCase()}</span>
+              <button onclick="addToCart('${item.id}')" class="px-4 py-2 bg-pink-950/60 hover:bg-brand-pink text-pink-300 hover:text-white border border-brand-pink/40 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 shadow-md">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>Agregar</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // AGREGAR AL CARRITO
+    function addToCart(itemId) {
+      const item = MENU_ITEMS.find(i => i.id === itemId);
+      if (!item) return;
+
+      let selectedOption = null;
+      const selectElem = document.getElementById(`select-opt-${itemId}`);
+      if (selectElem) {
+        selectedOption = selectElem.value;
+      }
+
+      // Buscar si ya existe la combinación exacta en el carrito
+      const cartIndex = cart.findIndex(c => c.id === itemId && c.selectedOption === selectedOption);
+
+      if (cartIndex > -1) {
+        cart[cartIndex].quantity += 1;
+      } else {
+        cart.push({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          selectedOption: selectedOption,
+          quantity: 1
+        });
+      }
+
+      updateCartUI();
+      
+      // Feedback visual rápido
+      const stickyBar = document.getElementById('sticky-cart-bar');
+      stickyBar.classList.add('glow-pink');
+      setTimeout(() => stickyBar.classList.remove('glow-pink'), 400);
+    }
+
+    function quickAdd(itemId) {
+      switchTab('menu');
+      addToCart(itemId);
+    }
+
+    // CAMBIAR CANTIDADES EN EL CARRITO
+    function updateQuantity(index, delta) {
+      if (cart[index]) {
+        cart[index].quantity += delta;
+        if (cart[index].quantity <= 0) {
+          cart.splice(index, 1);
+        }
+      }
+      updateCartUI();
+    }
+
+    // ELIMINAR ITEM
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    // ACTUALIZAR INTERFAZ DEL CARRITO
+    function updateCartUI() {
+      const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
+      const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+
+      // Badges & Contadores
+      document.getElementById('nav-cart-badge').innerText = totalItems;
+      document.getElementById('nav-cart-badge').classList.toggle('hidden', totalItems === 0);
+      
+      document.getElementById('cart-badge-counter').innerText = totalItems;
+      document.getElementById('sticky-cart-count').innerText = totalItems;
+      document.getElementById('sticky-cart-total').innerText = `$${totalPrice.toFixed(2)}`;
+      document.getElementById('cart-drawer-total').innerText = `$${totalPrice.toFixed(2)}`;
+
+      // Sticky bar visibility
+      const stickyBar = document.getElementById('sticky-cart-bar');
+      if (totalItems > 0) {
+        stickyBar.classList.remove('translate-y-full');
+      } else {
+        stickyBar.classList.add('translate-y-full');
+      }
+
+      // Renderizar items en el modal drawer
+      const container = document.getElementById('cart-items-container');
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 space-y-3 text-gray-500">
+            <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto stroke-1 text-gray-600"></i>
+            <p class="text-sm font-medium">Tu carrito está vacío</p>
+            <button onclick="toggleCartDrawer()" class="text-xs text-brand-pink font-bold underline">Explorar el menú y agregar productos</button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = cart.map((item, idx) => `
+          <div class="bg-brand-card/90 border border-gray-800 rounded-xl p-3 flex items-center justify-between gap-3">
+            <div class="flex-1 min-w-0">
+              <h4 class="font-bold text-white text-xs truncate">${item.title}</h4>
+              ${item.selectedOption ? `<p class="text-[10px] text-pink-400 font-semibold">Opción: ${item.selectedOption}</p>` : ''}
+              <p class="text-xs font-black text-brand-pink mt-0.5">$${(item.price * item.quantity).toFixed(2)}</p>
+            </div>
+
+            <!-- CONTROLES CANTIDAD -->
+            <div class="flex items-center gap-2 bg-black/60 border border-gray-800 rounded-lg p-1">
+              <button onclick="updateQuantity(${idx}, -1)" class="w-6 h-6 rounded flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 text-xs font-bold">-</button>
+              <span class="text-xs font-extrabold text-white w-4 text-center">${item.quantity}</span>
+              <button onclick="updateQuantity(${idx}, 1)" class="w-6 h-6 rounded flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 text-xs font-bold">+</button>
+            </div>
+
+            <button onclick="removeFromCart(${idx})" class="text-gray-500 hover:text-red-400 p-1">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        `).join('');
+      }
+
+      lucide.createIcons();
+    }
+
+    // MOSTRAR/OCULTAR CARRITO DRAWER
+    function toggleCartDrawer() {
+      const drawer = document.getElementById('cart-drawer');
+      drawer.classList.toggle('hidden');
+    }
+
+    // ENVIAR PEDIDO COMPLETO A WHATSAPP
+    function sendOrderToWhatsApp() {
+      if (cart.length === 0) {
+        alert('Tu carrito está vacío. Agrega productos antes de enviar tu pedido.');
+        return;
+      }
+
+      const name = document.getElementById('cust-name').value.trim();
+      const address = document.getElementById('cust-address').value.trim();
+      const notes = document.getElementById('cust-notes').value.trim();
+
+      if (!name || !address) {
+        alert('Por favor completa tu Nombre y Dirección o forma de entrega antes de enviar.');
+        return;
+      }
+
+      const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+
+      let msg = `*¡HOLA! QUIERO REALIZAR UN PEDIDO EN THE BEST HAMBURGERS* 🍔🔥\n\n`;
+      msg += `👤 *Nombre:* ${name}\n`;
+      msg += `📍 *Entrega/Ubicación:* ${address}\n`;
+      if (notes) msg += `📝 *Notas:* ${notes}\n`;
+      msg += `------------------------------------\n`;
+      msg += `🛒 *DESGLOSE DE MI PEDIDO:*\n\n`;
+
+      cart.forEach((item, index) => {
+        msg += `${index + 1}. *${item.quantity}x ${item.title}*\n`;
+        if (item.selectedOption) {
+          msg += `   └ *Opción:* ${item.selectedOption}\n`;
+        }
+        msg += `   └ Subtotal: $${(item.price * item.quantity).toFixed(2)}\n\n`;
+      });
+
+      msg += `------------------------------------\n`;
+      msg += `💰 *TOTAL A PAGAR: $${totalPrice.toFixed(2)}*\n\n`;
+      msg += `¡Quedo a la espera de su confirmación! Muchas gracias.`;
+
+      const whatsappNum = "524423692088";
+      const encodedUrl = `https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`;
+
+      window.open(encodedUrl, '_blank');
+    }
+  </script>
+</body>
+</html>
